@@ -488,7 +488,7 @@
                     member.city.toLowerCase().includes(currentSearch) ||
                     member.doing.toLowerCase().includes(currentSearch) ||
                     member.goal.toLowerCase().includes(currentSearch) ||
-                    member.tags.some(tag => tag.toLowerCase().includes(currentSearch));
+                    (member.tags || member.skills || []).some(tag => tag.toLowerCase().includes(currentSearch));
 
                 let filterMatch = true;
                 if (currentFilter !== 'all') {
@@ -497,7 +497,7 @@
                     } else if (currentFilter === '毕业生') {
                         filterMatch = member.grade === '毕业生' || member.grade === '社会人' || member.grade.includes('毕业');
                     } else {
-                        filterMatch = member.tags.some(tag => tag.includes(currentFilter)) ||
+                        filterMatch = (member.tags || member.skills || []).some(tag => tag.includes(currentFilter)) ||
                             member.grade.includes(currentFilter) ||
                             member.doing.includes(currentFilter) ||
                             member.goal.includes(currentFilter);
@@ -542,7 +542,7 @@
                         <div class="card-body">
                             <div class="doing-preview">${member.doing}</div>
                             <div class="tags">
-                                ${member.tags.slice(0, 4).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                ${(member.tags || member.skills || []).slice(0, 4).map(tag => `<span class="tag">${tag}</span>`).join('')}
                             </div>
                         </div>
                         <div class="card-footer">
@@ -569,7 +569,7 @@
             document.getElementById('modalDoing').textContent = member.doing;
             document.getElementById('modalGoal').textContent = member.goal;
             document.getElementById('modalWechatId').textContent = member.nickname;
-            document.getElementById('modalTags').innerHTML = member.tags.map(tag => `<span class="modal-tag">${tag}</span>`).join('');
+            document.getElementById('modalTags').innerHTML = (member.tags || member.skills || []).map(tag => `<span class="modal-tag">${tag}</span>`).join('');
 
             document.getElementById('modalOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
