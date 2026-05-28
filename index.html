@@ -277,6 +277,12 @@
         .modal-wechat:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(7, 193, 96, 0.3); }
         .modal-wechat .label { font-size: 0.85rem; opacity: 0.9; }
         .modal-wechat .value { font-weight: 700; font-size: 1.1rem; }
+        .original-intro { transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease; overflow: hidden; }
+        .original-intro.collapsed { max-height: 0; opacity: 0; padding: 0; }
+        .original-intro.expanded { max-height: 2000px; opacity: 1; padding-top: 0.75rem; }
+        .original-intro pre { font-family: 'Nunito', -apple-system, sans-serif; white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem; line-height: 1.7; color: var(--text-secondary); background: var(--bg); border-radius: 12px; padding: 1rem 1.25rem; margin: 0; border: 1px solid rgba(0,0,0,0.06); max-height: 400px; overflow-y: auto; }
+        #toggleArrow { display: inline-block; transition: transform 0.3s ease; }
+        #toggleArrow.rotated { transform: rotate(180deg); }
 
         /* === THEME TOGGLE === */
         .theme-toggle { position: fixed; top: 1rem; right: 1rem; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: none; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; z-index: 200; transition: all 0.3s; }
@@ -407,6 +413,12 @@
                     <div>📋</div>
                 </div>
             </div>
+            <div class="modal-section">
+                <h4 style="cursor:pointer;user-select:none;" onclick="toggleOriginalText()">📝 自我介绍原文 <span id="toggleArrow" style="font-size:0.8em;transition:transform 0.3s;">▼</span></h4>
+                <div id="modalOriginalIntro" class="original-intro collapsed">
+                    <pre id="originalIntroText"></pre>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -535,11 +547,28 @@
 
             document.getElementById('modalOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
+
+            // Reset original intro section
+            const introEl = document.getElementById('modalOriginalIntro');
+            const arrowEl = document.getElementById('toggleArrow');
+            introEl.classList.remove('expanded');
+            introEl.classList.add('collapsed');
+            arrowEl.classList.remove('rotated');
+            const introText = member.original_intro || '该成员暂未发布自我介绍原文';
+            document.getElementById('originalIntroText').textContent = introText;
         }
 
         function closeModal() {
             document.getElementById('modalOverlay').classList.remove('active');
             document.body.style.overflow = '';
+        }
+
+        function toggleOriginalText() {
+            const introEl = document.getElementById('modalOriginalIntro');
+            const arrowEl = document.getElementById('toggleArrow');
+            introEl.classList.toggle('collapsed');
+            introEl.classList.toggle('expanded');
+            arrowEl.classList.toggle('rotated');
         }
 
         // === ACTIONS ===
