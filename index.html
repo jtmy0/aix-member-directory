@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI×个人品牌收钱营 - 成员目录</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- 使用系统字体，避免 Google Fonts 被墙导致页面异常 -->
     <style>
         /* === ROOT VARIABLES === */
         :root {
@@ -55,7 +55,7 @@
 
         /* === RESET & BASE === */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; transition: all 0.3s ease; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; transition: all 0.3s ease; }
 
         /* === HEADER === */
         .header {
@@ -280,7 +280,7 @@
         .original-intro { transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease; overflow: hidden; }
         .original-intro.collapsed { max-height: 0; opacity: 0; padding: 0; }
         .original-intro.expanded { max-height: 2000px; opacity: 1; padding-top: 0.75rem; }
-        .original-intro pre { font-family: 'Nunito', -apple-system, sans-serif; white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem; line-height: 1.7; color: var(--text-secondary); background: var(--bg); border-radius: 12px; padding: 1rem 1.25rem; margin: 0; border: 1px solid rgba(0,0,0,0.06); max-height: 400px; overflow-y: auto; }
+        .original-intro pre { font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif; white-space: pre-wrap; word-wrap: break-word; font-size: 0.85rem; line-height: 1.7; color: var(--text-secondary); background: var(--bg); border-radius: 12px; padding: 1rem 1.25rem; margin: 0; border: 1px solid rgba(0,0,0,0.06); max-height: 400px; overflow-y: auto; }
         #toggleArrow { display: inline-block; transition: transform 0.3s ease; }
         #toggleArrow.rotated { transform: rotate(180deg); }
 
@@ -437,15 +437,37 @@
 
         // === LOAD DATA ===
         async function loadMembers() {
+            const grid = document.getElementById('membersGrid');
+            const countEl = document.getElementById('membersCount');
+            const banner = document.getElementById('updateBanner');
+
+            // 加载中状态
+            grid.innerHTML = '<div class="empty-state"><p style="font-size:1.2rem;">⏳ 数据加载中...</p></div>';
+            countEl.textContent = '加载中...';
+            banner.innerHTML = '📅 正在获取最新数据...';
+
             try {
-                const response = await fetch('members.json');
+                // 加上时间戳破坏 CDN/浏览器缓存
+                const ts = new Date().getTime();
+                const response = await fetch('members.json?v=' + ts);
+                if (!response.ok) throw new Error('HTTP ' + response.status);
                 const data = await response.json();
+                if (!data.members || !Array.isArray(data.members)) throw new Error('数据格式错误');
                 members = data.members;
                 document.getElementById('memberCount').textContent = members.length;
-                document.getElementById('updateBanner').innerHTML = `📅 数据最后更新：${data.group_info.last_updated} <span>· 定期更新中</span>`;
+                banner.innerHTML = `📅 数据最后更新：${data.group_info.last_updated} <span>· 定期更新中</span>`;
                 renderMembers();
             } catch (error) {
-                console.error('Error loading members:', error);
+                console.error('加载失败:', error);
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <p style="font-size:1.2rem;color:#e53e3e;">❌ 数据加载失败</p>
+                        <p style="margin-top:0.5rem;">原因：${error.message}</p>
+                        <p style="margin-top:0.5rem;font-size:0.85rem;">请尝试 <a href="javascript:location.reload()" style="color:var(--teal-600);">刷新页面</a> 或检查网络连接</p>
+                    </div>
+                `;
+                countEl.textContent = '加载失败';
+                banner.innerHTML = '⚠️ 数据加载失败，请刷新重试';
             }
         }
 
