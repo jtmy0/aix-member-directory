@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>风格D改进版 - 社区氛围风</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f0f2f5;
+            --card-bg: #ffffff;
+            --text: #1c1e21;
+            --text-secondary: #65676b;
+            --accent: #1877f2;
+            --accent-light: #e7f3ff;
+            --green: #42b72a;
+            --orange: #f7b928;
+            --pink: #e91e63;
+            --purple: #9c27b0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); }
+
+        /* Header with gradient */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            padding: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .search-bar {
+            padding: 0.7rem 1.2rem;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 100px;
+            width: 300px;
+            font-size: 0.95rem;
+            color: white;
+            outline: none;
+        }
+        .search-bar::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        .search-bar:focus {
+            background: rgba(255,255,255,0.3);
+        }
+        .stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .stat {
+            text-align: center;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+        }
+        .stat-num {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: white;
+        }
+        .stat-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Card */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            transform: translateY(-4px);
+        }
+        .card-header {
+            padding: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            flex-shrink: 0;
+        }
+        .card:nth-child(4n+1) .avatar { background: linear-gradient(135deg, #ff6b6b, #ffa500); }
+        .card:nth-child(4n+2) .avatar { background: linear-gradient(135deg, #a855f7, #ec4899); }
+        .card:nth-child(4n+3) .avatar { background: linear-gradient(135deg, #14b8a6, #3b82f6); }
+        .card:nth-child(4n) .avatar { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+        .user-info { flex: 1; }
+        .name { font-weight: 700; font-size: 1.1rem; }
+        .meta { color: var(--text-secondary); font-size: 0.85rem; }
+        .card-body {
+            padding: 0 1.2rem;
+        }
+        .doing-preview {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            padding: 0.25rem 0.6rem;
+            background: var(--accent-light);
+            color: var(--accent);
+            border-radius: 100px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .card-footer {
+            display: flex;
+            border-top: 1px solid #f0f0f0;
+        }
+        .footer-btn {
+            flex: 1;
+            padding: 0.8rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .footer-btn:hover {
+            background: var(--bg);
+            color: var(--accent);
+        }
+        .footer-btn:first-child {
+            border-right: 1px solid #f0f0f0;
+        }
+        .footer-btn.active {
+            color: var(--pink);
+        }
+        .footer-btn.copy-success {
+            color: var(--green);
+            background: #f0fdf4;
+        }
+
+        /* Expand section */
+        .card-expand {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: #fafbfc;
+        }
+        .card-expand.open {
+            max-height: 500px;
+        }
+        .expand-content {
+            padding: 1.2rem;
+        }
+        .expand-section {
+            margin-bottom: 1rem;
+        }
+        .expand-section:last-child {
+            margin-bottom: 0;
+        }
+        .expand-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.4rem;
+        }
+        .expand-text {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .wechat-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #07c160, #06ad56);
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .wechat-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(7, 193, 96, 0.3);
+        }
+        .wechat-box .label {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.8rem;
+        }
+        .wechat-box .value {
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .wechat-box .copy-icon {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* Preview label */
+        .preview-label {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 700;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            font-size: 0.9rem;
+        }
+        .preview-hint {
+            position: fixed;
+            bottom: 4.5rem;
+            right: 1rem;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            z-index: 100;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            top: 5rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: #1c1e21;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            z-index: 200;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="toast" id="toast"></div>
+
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">🚀 AI×个人品牌收钱营</div>
+            <input type="text" class="search-bar" placeholder="🔍 搜索成员、城市、技能...">
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-num">48</div>
+                    <div class="stat-label">已登记</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">156</div>
+                    <div class="stat-label">群成员</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="grid">
+        <!-- 采石 -->
+        <div class="card" onclick="toggleExpand(this)">
+            <div class="card-header">
+                <div class="avatar">采</div>
+                <div class="user-info">
+                    <div class="name">采石</div>
+                    <div class="meta">大一 · 山东济南</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="doing-preview">大一经济独立、知识付费讲师、OPC联合创始人、单周GMV 3w+</div>
+                <div class="tags">
+                    <span class="tag">知识付费</span>
+                    <span class="tag">OPC</span>
+                    <span class="tag">GMV</span>
+                    <span class="tag">团队管理</span>
+                </div>
+            </div>
+            <div class="card-expand">
+                <div class="expand-content">
+                    <div class="expand-section">
+                        <div class="expand-label">正在做什么</div>
+                        <div class="expand-text">大一经济独立、知识付费讲师、"破界青年OPC"联合创始人、九年数十万字日记沉淀、操盘私域裂变发售实现单周GMV 3w+、大一成功组建百人团队并进行项目管理</div>
+                    </div>
+                    <div class="expand-section">
+                        <div class="expand-label">想解决什么问题</div>
+                        <div class="expand-text">深度学习AI、工作提效，链接有野心的创业同行者</div>
+                    </div>
+                    <div class="expand-section">
+                        <div class="wechat-box" onclick="event.stopPropagation(); copyWechat('采石')">
+                            <div>
+                                <div class="label">点击复制微信号</div>
+                                <div class="value">采石</div>
+                            </div>
+                            <div class="copy-icon">📋</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="footer-btn" onclick="event.stopPropagation(); toggleLike(this)">⭐ 收藏</div>
+                <div class="footer-btn" onclick="event.stopPropagation(); copyWechat('采石')">📋 复制微信</div>
+            </div>
+        </div>
+
+        <!-- 赵富哲 -->
+        <div class="card" onclick="toggleExpand(this)">
+            <div class="card-header">
+                <div class="avatar">赵</div>
+                <div class="user-info">
+                    <div class="name">赵富哲</div>
+                    <div class="meta">大一 · 河北沧州</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="doing-preview">AI中转站运营、190+人私域社群、单期裂变31人</div>
+                <div class="tags">
+                    <span class="tag">AI中转站</span>
+                    <span class="tag">私域</span>
+                    <span class="tag">裂变</span>
+                    <span class="tag">社群运营</span>
+                </div>
+            </div>
+            <div class="card-expand">
+                <div class="expand-content">
+                    <div class="expand-section">
+                        <div class="expand-label">正在做什么</div>
+                        <div class="expand-text">3月中旬入局AI赛道，独立跑通服务器部署到私域运营全流程，运营190+人精准AI私域社群，有单期裂变31人的实战经验，沉淀了完整可复用的风控与运营方法论</div>
+                    </div>
+                    <div class="expand-section">
+                        <div class="expand-label">想解决什么问题</div>
+                        <div class="expand-text">系统学习个人品牌打造逻辑，提升辨识度和信任度；掌握通过价值输出自然引流的方法</div>
+                    </div>
+                    <div class="expand-section">
+                        <div class="wechat-box" onclick="event.stopPropagation(); copyWechat('赵富哲（河北科技工程职业技术大学）')">
+                            <div>
+                                <div class="label">点击复制微信号</div>
+                                <div class="value">赵富哲</div>
+                            </div>
+                            <div class="copy-icon">📋</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="footer-btn" onclick="event.stopPropagation(); toggleLike(this)">⭐ 收藏</div>
+                <div class="footer-btn" onclick="event.stopPropagation(); copyWechat('赵富哲（河北科技工程职业技术大学）')">📋 复制微信</div>
+            </div>
+        </div>
+
+        <!-- 陈石林 -->
+        <div class="card" onclick="toggleExpand(this)">
+            <div class="card-header">
+                <div class="avatar">陈</div>
+                <div class="user-info">
+                    <div class="name">陈石林</div>
+                    <div class="meta">大一 · 云南昆明</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="doing-preview">首个项目变现2000+，单日拉群180人，项目销冠</div>
+                <div class="tags">
+                    <span class="tag">变现</span>
+                    <span class="tag">私域</span>
+                    <span class="tag">销冠</span>
+                    <span class="tag">AI</span>
+                </div>
+            </div>
+            <div class="card-expand">
+                <div class="expand-content">
+                    <div class="expand-section">
+                        <div class="expand-label">正在做什么</div>
+                        <div class="expand-text">首个项目累计变现服务2000+，单日峰值拉群180人，首次私域裂变转化30人，项目发售联动14位KOL断层拿下销冠，搭建线上60人、线下10人的双轨团队</div>
+                    </div>
+                    <div class="expand-section">
+                        <div class="expand-label">想解决什么问题</div>
+                        <div class="expand-text">用AI全链路提效，搭建自动化运营流程，放大个人曝光与影响力</div>
+                    </div>
+                    <div class="expand-section">
+                        <div class="wechat-box" onclick="event.stopPropagation(); copyWechat('Al小明   网课   技能  学习版')">
+                            <div>
+                                <div class="label">点击复制微信号</div>
+                                <div class="value">Al小明 网课 技能 学习版</div>
+                            </div>
+                            <div class="copy-icon">📋</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="footer-btn" onclick="event.stopPropagation(); toggleLike(this)">⭐ 收藏</div>
+                <div class="footer-btn" onclick="event.stopPropagation(); copyWechat('Al小明   网课   技能  学习版')">📋 复制微信</div>
+            </div>
+        </div>
+
+        <!-- 董美婷 -->
+        <div class="card" onclick="toggleExpand(this)">
+            <div class="card-header">
+                <div class="avatar">董</div>
+                <div class="user-info">
+                    <div class="name">董美婷</div>
+                    <div class="meta">大一 · 江苏南京</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="doing-preview">UI交互设计+艺术疗愈，变现破五位数，二奢销售</div>
+                <div class="tags">
+                    <span class="tag">UI设计</span>
+                    <span class="tag">二奢</span>
+                    <span class="tag">变现</span>
+                    <span class="tag">艺术</span>
+                </div>
+            </div>
+            <div class="card-expand">
+                <div class="expand-content">
+                    <div class="expand-section">
+                        <div class="expand-label">正在做什么</div>
+                        <div class="expand-text">UI交互设计+艺术疗愈，ccd轻创业+自媒体+二奢销售，独立搭建选品引流成交全链路，个人实操变现破五位数，布局高端腕表销售赛道</div>
+                    </div>
+                    <div class="expand-section">
+                        <div class="expand-label">想解决什么问题</div>
+                        <div class="expand-text">提升个人效率，精准定位人设，产品轻量化，放大时间价值</div>
+                    </div>
+                    <div class="expand-section">
+                        <div class="wechat-box" onclick="event.stopPropagation(); copyWechat('芊岛記')">
+                            <div>
+                                <div class="label">点击复制微信号</div>
+                                <div class="value">芊岛記</div>
+                            </div>
+                            <div class="copy-icon">📋</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="footer-btn" onclick="event.stopPropagation(); toggleLike(this)">⭐ 收藏</div>
+                <div class="footer-btn" onclick="event.stopPropagation(); copyWechat('芊岛記')">📋 复制微信</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="preview-hint">👆 点击卡片展开详情</div>
+    <div class="preview-label">✨ 风格D改进版</div>
+
+    <script>
+        // Toggle card expand
+        function toggleExpand(card) {
+            const expand = card.querySelector('.card-expand');
+            expand.classList.toggle('open');
+        }
+
+        // Toggle like/favorite
+        function toggleLike(btn) {
+            btn.classList.toggle('active');
+            if (btn.classList.contains('active')) {
+                btn.innerHTML = '⭐ 已收藏';
+                showToast('已添加到收藏夹');
+            } else {
+                btn.innerHTML = '⭐ 收藏';
+                showToast('已取消收藏');
+            }
+        }
+
+        // Copy wechat
+        function copyWechat(wechat) {
+            navigator.clipboard.writeText(wechat).then(() => {
+                showToast('✅ 已复制: ' + wechat);
+            }).catch(() => {
+                // Fallback
+                const textArea = document.createElement('textarea');
+                textArea.value = wechat;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast('✅ 已复制: ' + wechat);
+            });
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

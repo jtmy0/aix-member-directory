@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>风格D - 社区氛围风</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f0f2f5;
+            --card-bg: #ffffff;
+            --text: #1c1e21;
+            --text-secondary: #65676b;
+            --accent: #1877f2;
+            --accent-light: #e7f3ff;
+            --green: #42b72a;
+            --orange: #f7b928;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); }
+        .header { background: var(--card-bg); padding: 1.5rem 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+        .search-bar { padding: 0.6rem 1rem; border: none; background: var(--bg); border-radius: 100px; width: 300px; font-size: 0.9rem; }
+        .stats { display: flex; gap: 1.5rem; }
+        .stat { text-align: center; }
+        .stat-num { font-size: 1.2rem; font-weight: 800; color: var(--accent); }
+        .stat-label { font-size: 0.7rem; color: var(--text-secondary); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; padding: 1.5rem; max-width: 1200px; margin: 0 auto; }
+        .card { background: var(--card-bg); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.1); transition: all 0.2s; }
+        .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateY(-2px); }
+        .card-header { padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+        .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--green)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; color: white; }
+        .card:nth-child(4n+1) .avatar { background: linear-gradient(135deg, #ff6b6b, #ffa500); }
+        .card:nth-child(4n+2) .avatar { background: linear-gradient(135deg, #a855f7, #ec4899); }
+        .card:nth-child(4n+3) .avatar { background: linear-gradient(135deg, #14b8a6, #3b82f6); }
+        .user-info { flex: 1; }
+        .name { font-weight: 700; font-size: 1rem; }
+        .meta { color: var(--text-secondary); font-size: 0.8rem; }
+        .card-body { padding: 0 1.2rem 1rem; }
+        .doing { font-size: 0.9rem; color: var(--text); line-height: 1.6; margin-bottom: 0.8rem; }
+        .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+        .tag { padding: 0.25rem 0.6rem; background: var(--accent-light); color: var(--accent); border-radius: 100px; font-size: 0.7rem; font-weight: 600; }
+        .card-footer { display: flex; border-top: 1px solid #eee; }
+        .footer-btn { flex: 1; padding: 0.7rem; text-align: center; color: var(--text-secondary); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: background 0.2s; }
+        .footer-btn:hover { background: var(--bg); }
+        .footer-btn:first-child { border-right: 1px solid #eee; }
+        .preview-label { position: fixed; top: 1rem; left: 1rem; background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 100px; font-weight: 600; z-index: 100; }
+    </style>
+</head>
+<body>
+    <span class="preview-label">风格D: 社区氛围风</span>
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">🔗 AI收钱营</div>
+            <input type="text" class="search-bar" placeholder="搜索成员...">
+            <div class="stats">
+                <div class="stat"><div class="stat-num">48</div><div class="stat-label">成员</div></div>
+                <div class="stat"><div class="stat-num">156</div><div class="stat-label">群人数</div></div>
+            </div>
+        </div>
+    </header>
+    <div class="grid">
+        <div class="card">
+            <div class="card-header"><div class="avatar">采</div><div class="user-info"><div class="name">采石</div><div class="meta">大一 · 山东济南</div></div></div>
+            <div class="card-body"><div class="doing">大一经济独立、知识付费讲师、OPC联合创始人、单周GMV 3w+</div><div class="tags"><span class="tag">知识付费</span><span class="tag">OPC</span><span class="tag">GMV</span></div></div>
+            <div class="card-footer"><div class="footer-btn">👍 点赞</div><div class="footer-btn">💬 链接</div></div>
+        </div>
+        <div class="card">
+            <div class="card-header"><div class="avatar">赵</div><div class="user-info"><div class="name">赵富哲</div><div class="meta">大一 · 河北沧州</div></div></div>
+            <div class="card-body"><div class="doing">AI中转站运营、190+人私域社群、单期裂变31人</div><div class="tags"><span class="tag">私域</span><span class="tag">裂变</span><span class="tag">社群</span></div></div>
+            <div class="card-footer"><div class="footer-btn">👍 点赞</div><div class="footer-btn">💬 链接</div></div>
+        </div>
+        <div class="card">
+            <div class="card-header"><div class="avatar">陈</div><div class="user-info"><div class="name">陈石林</div><div class="meta">大一 · 云南昆明</div></div></div>
+            <div class="card-body"><div class="doing">首个项目变现2000+，单日拉群180人，项目销冠</div><div class="tags"><span class="tag">变现</span><span class="tag">私域</span><span class="tag">销冠</span></div></div>
+            <div class="card-footer"><div class="footer-btn">👍 点赞</div><div class="footer-btn">💬 链接</div></div>
+        </div>
+        <div class="card">
+            <div class="card-header"><div class="avatar">董</div><div class="user-info"><div class="name">董美婷</div><div class="meta">大一 · 江苏南京</div></div></div>
+            <div class="card-body"><div class="doing">UI交互设计+艺术疗愈，变现破五位数，二奢销售</div><div class="tags"><span class="tag">UI设计</span><span class="tag">二奢</span><span class="tag">变现</span></div></div>
+            <div class="card-footer"><div class="footer-btn">👍 点赞</div><div class="footer-btn">💬 链接</div></div>
+        </div>
+    </div>
+</body>
+</html>

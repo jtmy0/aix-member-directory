@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>风格C - 简约清爽风</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text: #1a1a1a;
+            --text-secondary: #6c757d;
+            --border: #e9ecef;
+            --accent: #000000;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans SC', -apple-system, sans-serif; background: var(--bg); color: var(--text); }
+        .header { padding: 4rem 2rem; text-align: center; border-bottom: 1px solid var(--border); }
+        .header h1 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.02em; }
+        .header p { color: var(--text-secondary); margin-top: 0.5rem; font-size: 1.1rem; }
+        .divider { width: 40px; height: 4px; background: var(--accent); margin: 1.5rem auto 0; border-radius: 2px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0; max-width: 1200px; margin: 0 auto; }
+        .card { padding: 2rem; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); transition: background 0.2s; cursor: pointer; }
+        .card:hover { background: var(--bg-secondary); }
+        .card-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .avatar { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.1rem; }
+        .name { font-weight: 600; font-size: 1.1rem; }
+        .meta { color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem; }
+        .doing { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1rem; }
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tag { padding: 0.3rem 0.6rem; background: var(--bg-secondary); color: var(--text-secondary); border-radius: 4px; font-size: 0.75rem; font-weight: 500; }
+        .preview-label { position: fixed; top: 1rem; left: 1rem; background: var(--accent); color: white; padding: 0.5rem 1rem; border-radius: 100px; font-weight: 600; z-index: 100; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <span class="preview-label">风格C: 简约清爽风</span>
+    <header class="header">
+        <h1>AI×个人品牌收钱营</h1>
+        <p>成员目录</p>
+        <div class="divider"></div>
+    </header>
+    <div class="grid">
+        <div class="card"><div class="card-top"><div class="avatar">采</div><div><div class="name">采石</div><div class="meta">大一 · 山东济南</div></div></div><div class="doing">大一经济独立、知识付费讲师、OPC联合创始人、单周GMV 3w+</div><div class="tags"><span class="tag">知识付费</span><span class="tag">OPC</span><span class="tag">GMV</span></div></div>
+        <div class="card"><div class="card-top"><div class="avatar">赵</div><div><div class="name">赵富哲</div><div class="meta">大一 · 河北沧州</div></div></div><div class="doing">AI中转站运营、190+人私域社群、单期裂变31人</div><div class="tags"><span class="tag">私域</span><span class="tag">裂变</span><span class="tag">社群</span></div></div>
+        <div class="card"><div class="card-top"><div class="avatar">陈</div><div><div class="name">陈石林</div><div class="meta">大一 · 云南昆明</div></div></div><div class="doing">首个项目变现2000+，单日拉群180人，项目销冠</div><div class="tags"><span class="tag">变现</span><span class="tag">私域</span><span class="tag">销冠</span></div></div>
+        <div class="card"><div class="card-top"><div class="avatar">董</div><div><div class="name">董美婷</div><div class="meta">大一 · 江苏南京</div></div></div><div class="doing">UI交互设计+艺术疗愈，变现破五位数，二奢销售</div><div class="tags"><span class="tag">UI设计</span><span class="tag">二奢</span><span class="tag">变现</span></div></div>
+    </div>
+</body>
+</html>
