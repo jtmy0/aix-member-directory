@@ -349,7 +349,7 @@
                     <div class="stat-label">已登记</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-num">156</div>
+                    <div class="stat-num" id="totalMembers">156</div>
                     <div class="stat-label">群成员</div>
                 </div>
             </div>
@@ -458,6 +458,7 @@
                 if (!data.members || !Array.isArray(data.members)) throw new Error('数据格式错误');
                 members = data.members;
                 document.getElementById('memberCount').textContent = members.length;
+                document.getElementById('totalMembers').textContent = data.group_info.total_members;
                 banner.innerHTML = `📅 数据最后更新：${data.group_info.last_updated} <span>· 定期更新中</span>`;
                 renderMembers();
             } catch (error) {
