@@ -459,7 +459,8 @@
                 members = data.members;
                 document.getElementById('memberCount').textContent = members.length;
                 document.getElementById('totalMembers').textContent = data.group_info.total_members;
-                banner.innerHTML = `📅 数据最后更新：${data.group_info.last_updated} <span>· 定期更新中</span>`;
+                const updateTime = data.group_info.update_time || data.group_info.last_updated;
+                banner.innerHTML = `📅 数据最后更新：${updateTime} <span>· 定期更新中</span>`;
                 renderMembers();
             } catch (error) {
                 console.error('加载失败:', error);
@@ -492,15 +493,18 @@
 
                 let filterMatch = true;
                 if (currentFilter !== 'all') {
+                    const grade = member.grade || '';
+                    const doing = member.doing || '';
+                    const goal = member.goal || '';
                     if (currentFilter === '大三大四') {
-                        filterMatch = member.grade === '大三' || member.grade === '大四';
+                        filterMatch = grade === '大三' || grade === '大四';
                     } else if (currentFilter === '毕业生') {
-                        filterMatch = member.grade === '毕业生' || member.grade === '社会人' || member.grade.includes('毕业');
+                        filterMatch = grade === '毕业生' || grade === '社会人' || grade.includes('毕业');
                     } else {
                         filterMatch = (member.tags || member.skills || []).some(tag => tag.includes(currentFilter)) ||
-                            member.grade.includes(currentFilter) ||
-                            member.doing.includes(currentFilter) ||
-                            member.goal.includes(currentFilter);
+                            grade.includes(currentFilter) ||
+                            doing.includes(currentFilter) ||
+                            goal.includes(currentFilter);
                     }
                 }
 
